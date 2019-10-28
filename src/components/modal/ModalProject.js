@@ -9,30 +9,36 @@ import { connect } from 'react-redux'
 
 
 import { addProjeto } from '../../store/actions/projects'
- 
+import { modalProjct  } from '../../store/actions/modal'
 
 const validation = Yup.object().shape({
     title: Yup.string().required('Campo obrigatorio'),
     description: Yup.string().required('Descrição é Campo Obrigatório')
 })
 
-function ModalProject({ addProjeto, modal }){
+function ModalProject({ addProjeto, modal, modalProjct }){
     
-    
+    let initialState = {
+        title: '',
+        description: '',
+    }
+
+    function closeModal(e){
+        if(e.target.classList.value.includes('active')){
+            modalProjct(false)
+        }
+    }
+
 
     return (
-        <div className={ modal ? "container-modal-project active": "container-modal-project" }>
+        <div onClick={closeModal} className={ modal ? "container-modal-project active": "container-modal-project" }>
             <div className="card-modal-project">
                 <h1>Adicionar Projeto</h1>  
                 <Formik
-                        initialValues={
-                            {
-                                title: '',
-                                description: '',
-                            }
-                        }
+                        initialValues={initialState}
                         onSubmit={(value, actions) => {
                             addProjeto(value)
+                            actions.resetForm(initialState)
                             actions.setSubmitting(false);
                         }}
 
@@ -47,6 +53,7 @@ function ModalProject({ addProjeto, modal }){
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addProjeto }, dispatch);
+  bindActionCreators({ addProjeto, modalProjct }, dispatch);
+
 
 export default connect(null, mapDispatchToProps)(ModalProject)

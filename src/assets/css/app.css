@@ -132,18 +132,18 @@ form .error {
 }
 
 .container-card-projects {
-  height: 329px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
   grid-gap: 20px;
 }
 .container-card-projects .card-projects {
+  height: auto;
   padding: 20px;
   border: 1px solid #e2e2e2;
   background-color: #ffffff;
 }
 .container-card-projects .title-create {
-  grid-column: span 3;
+  grid-column: span 4;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -3,9 +3,6 @@ import { Form,Field, ErrorMessage } from 'formik'
 
 
 function FormProject(props) {
-    
-    
-
     return (
         <Form>
             <div className="container-form">

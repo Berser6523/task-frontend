@@ -1,5 +1,5 @@
 import { all, takeLeading  } from 'redux-saga/effects';
-import { getProjects, addProject, editProject } from './projects'
+import { getProjects, addProject, editProject, deleteProject } from './projects'
 import { auth } from './auth'
 
 
@@ -10,5 +10,6 @@ export default function* rootSaga() {
     takeLeading('REQUEST_PROJECTS', getProjects ),
     takeLeading('REQUEST_ADD_PROJECTS', addProject ),
     takeLeading('REQUEST_EDIT_PROJECTS', editProject ),
+    takeLeading('REQUEST_DELETE_PROJECT', deleteProject ),
   ]);
 }

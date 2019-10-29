@@ -32,6 +32,13 @@ export default function Projects(state = INTIAL_STATE, action){
                 projects: state.projects.map((project, index) => project._id === action.data._id ? project[index] = action.data : project )
              }
 
+        case 'REQUEST_DELETE_PROJECT':
+            return { ...state, loading: true }
+
+        case 'DELET_PROJECT':
+            
+            return {  ...state,  projects: state.projects.filter(project => project._id !== action.data.id) }    
+
         default:
             return state
     }

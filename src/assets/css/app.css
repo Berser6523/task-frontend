@@ -141,17 +141,30 @@ form .error {
   padding: 20px;
   border: 1px solid #e2e2e2;
   background-color: #ffffff;
+  position: relative;
 }
-.container-card-projects .title-create {
-  grid-column: span 3;
+.container-card-projects .card-projects .delete-card-project {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  z-index: 30;
+}
+.container-card-projects .card-projects .delete-card-project i {
+  color: #000;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.title-create {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 50px;
 }
-.container-card-projects .title-create h2 {
+.title-create h2 {
   margin: 0px;
 }
-.container-card-projects .title-create .btn {
+.title-create .btn {
   background-color: transparent;
 }
 

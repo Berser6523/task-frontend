@@ -7,7 +7,6 @@ async function apiGet(){
     return response.data
 }
 
-
 export function* getProjects(){
     
     try{
@@ -18,7 +17,6 @@ export function* getProjects(){
         yield put({ type: 'FAILUIRE_PROJECTS_LIST', filtro:""})
     }
 }
-
 
 async function requestAddProject({ value }){
     const { description, title} = value
@@ -58,6 +56,20 @@ export function* editProject({payload}){
         const response = yield call(requestEditProject, payload)
         yield put({ type: 'EDIT_PROJECT', data: response.project})
         yield put({ type: 'CLOSE_MODAL_PROJECT', modal: false})
+    }catch(err){
+        console.log(err)
+        yield put({ type: 'FAILUIRE_PROJECTS_LIST', error: true})
+    }
+}
+
+async function requestDeleteProject(id){
+    await api.delete(`/projects/${id}`)
+}
+
+export function* deleteProject({ id }){
+    try{
+        yield call(requestDeleteProject, id)
+        yield put({ type: 'DELET_PROJECT', data: { id }})
     }catch(err){
         console.log(err)
         yield put({ type: 'FAILUIRE_PROJECTS_LIST', error: true})

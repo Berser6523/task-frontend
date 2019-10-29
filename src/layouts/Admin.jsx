@@ -30,9 +30,9 @@ import ModalProject from '../components/modal/ModalProject'
 import Image from "assets/img/sidebar-3.jpg"
 
 function Admin(props){
-    const [image, setImage]  = useState(Image)
-    const [color, setColor]  = useState("black")
-    const [hasImage, setHasImage]  = useState(true)
+    const [image]  = useState(Image)
+    const [color]  = useState("black")
+    const [hasImage]  = useState(true)
     
     const { token, modal } = props
 

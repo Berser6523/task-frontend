@@ -20,7 +20,6 @@ function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, edit
 
     let idUpdate = editModal._id ? editModal._id : ""
 
-    console.log(editModal.title)
 
     let initialState = {
         title: editModal.title ? editModal.title : "",
@@ -37,14 +36,14 @@ function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, edit
     return (
         <div onClick={closeModal} className={ openModal ? "container-modal-project active": "container-modal-project" }>
             <div className="card-modal-project">
-                <h1>Adicionar Projeto</h1>  
+                <h1>{idUpdate ? "Editar Projeto": "Adicionar Projeto"} </h1>  
                 <Formik
                         enableReinitialize
                         initialValues={initialState}
                         onSubmit={(value, actions) => {
                             if(idUpdate){
                                 editProjeto({...value, _id: idUpdate})
-                                initialState = {}
+                                initialState = {...value}
                             }else{
                                 addProjeto(value)
                             }

@@ -52,7 +52,7 @@ function Admin(props){
             </div>
 
 
-            <ModalProject modal={modal}/>
+            <ModalProject openModal={modal}/>
         </>
     )
 }

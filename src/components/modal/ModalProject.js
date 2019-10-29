@@ -8,41 +8,53 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 
-import { addProjeto } from '../../store/actions/projects'
-import { modalProjct  } from '../../store/actions/modal'
+import { addProjeto, editProjeto } from '../../store/actions/projects'
+import { closeModalProjct  } from '../../store/actions/modal'
 
 const validation = Yup.object().shape({
     title: Yup.string().required('Campo obrigatorio'),
     description: Yup.string().required('Descrição é Campo Obrigatório')
 })
 
-function ModalProject({ addProjeto, modal, modalProjct }){
-    
+function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, editProjeto }){
+
+    let idUpdate = editModal._id ? editModal._id : ""
+
+    console.log(editModal.title)
+
     let initialState = {
-        title: '',
-        description: '',
+        title: editModal.title ? editModal.title : "",
+        description: editModal.description ? editModal.description : "",
     }
+
 
     function closeModal(e){
         if(e.target.classList.value.includes('active')){
-            modalProjct(false)
+            closeModalProjct(false)
         }
     }
 
-
     return (
-        <div onClick={closeModal} className={ modal ? "container-modal-project active": "container-modal-project" }>
+        <div onClick={closeModal} className={ openModal ? "container-modal-project active": "container-modal-project" }>
             <div className="card-modal-project">
                 <h1>Adicionar Projeto</h1>  
                 <Formik
+                        enableReinitialize
                         initialValues={initialState}
                         onSubmit={(value, actions) => {
-                            addProjeto(value)
+                            if(idUpdate){
+                                editProjeto({...value, _id: idUpdate})
+                                initialState = {}
+                            }else{
+                                addProjeto(value)
+                            }
+                            
+
                             actions.resetForm(initialState)
                             actions.setSubmitting(false);
                         }}
 
-                        render={props => <FormProject { ...props }  />}
+                        render={props => <FormProject { ...props } idUpdate={idUpdate} />}
 
                         validationSchema={validation}>   
                     
@@ -53,7 +65,10 @@ function ModalProject({ addProjeto, modal, modalProjct }){
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addProjeto, modalProjct }, dispatch);
+  bindActionCreators({ addProjeto, closeModalProjct, editProjeto }, dispatch);
 
+const mapStateToProps = state => ({
+  editModal: state.modal.editProject
+});
 
-export default connect(null, mapDispatchToProps)(ModalProject)
+export default connect(mapStateToProps, mapDispatchToProps)(ModalProject)

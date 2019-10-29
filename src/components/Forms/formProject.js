@@ -2,7 +2,7 @@ import React from 'react';
 import { Form,Field, ErrorMessage } from 'formik'
 
 
-function FormProject(props) {
+function FormProject({ idUpdate }) {
     return (
         <Form>
             <div className="container-form">
@@ -16,7 +16,7 @@ function FormProject(props) {
             </div>
             
             <div className="btn">
-                <button type="submit">Adicionar</button>
+                <button type="submit">{ idUpdate ? "Editar": "Adicionar" }</button>
             </div>
 
         </Form>

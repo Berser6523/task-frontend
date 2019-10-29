@@ -17,12 +17,20 @@ export default function Projects(state = INTIAL_STATE, action){
         case 'FAILUIRE_PROJECTS_LIST':
             return { projects: [], loading: false, error: true }
 
-
         case 'REQUEST_ADD_PROJECTS':
+            return { ...state, loading: true }
+
+        case 'REQUEST_EDIT_PROJECTS':
             return { ...state, loading: true }
         
         case 'ADD_PROJECTS':
             return {...state, projects: [...state.projects, action.data]}
+        
+        case 'EDIT_PROJECT':
+            return {
+                ...state,
+                projects: state.projects.map((project, index) => project._id === action.data._id ? project[index] = action.data : project )
+             }
 
         default:
             return state

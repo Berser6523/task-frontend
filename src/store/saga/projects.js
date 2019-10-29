@@ -35,7 +35,29 @@ export function* addProject({payload}){
     try{
         const response = yield call(requestAddProject, payload)
         yield put({ type: 'ADD_PROJECTS', data: response.project})
-        yield put({ type: 'MODAL_PROJECT', modal: false})
+        yield put({ type: 'CLOSE_MODAL_PROJECT', modal: false})
+    }catch(err){
+        console.log(err)
+        yield put({ type: 'FAILUIRE_PROJECTS_LIST', error: true})
+    }
+}
+
+async function requestEditProject({ value }){
+    const { description, title, _id} = value
+
+    const response = await api.put(`/projects/${_id}`, {
+        description,
+        title
+    })
+
+    return response.data
+}
+
+export function* editProject({payload}){
+    try{
+        const response = yield call(requestEditProject, payload)
+        yield put({ type: 'EDIT_PROJECT', data: response.project})
+        yield put({ type: 'CLOSE_MODAL_PROJECT', modal: false})
     }catch(err){
         console.log(err)
         yield put({ type: 'FAILUIRE_PROJECTS_LIST', error: true})

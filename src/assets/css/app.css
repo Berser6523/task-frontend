@@ -143,7 +143,7 @@ form .error {
   background-color: #ffffff;
 }
 .container-card-projects .title-create {
-  grid-column: span 4;
+  grid-column: span 3;
   display: flex;
   align-items: center;
   justify-content: space-between;

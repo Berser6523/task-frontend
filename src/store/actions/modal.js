@@ -1,8 +1,18 @@
-const MODAL_PROJECT = 'MODAL_PROJECT'
+const CLOSE_MODAL_PROJECT = 'CLOSE_MODAL_PROJECT'
+const EDIT_MODAL_PROJECT = 'EDIT_MODAL_PROJECT';
 
-export function modalProjct(modal){
+export function closeModalProjct(modal){
     return {
-        type: MODAL_PROJECT,
+        type: CLOSE_MODAL_PROJECT,
         modal
+    }
+}
+
+export function editarModal(project){
+    return{
+        type: EDIT_MODAL_PROJECT,
+        payload:{
+            ...project
+        }
     }
 }

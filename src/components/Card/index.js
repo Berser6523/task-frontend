@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux'
 import { formatDate } from '../../helper'
 
 import { requestProjects } from '../../store/actions/projects'
-import { modalProjct } from '../../store/actions/modal'
+import { closeModalProjct, editarModal } from '../../store/actions/modal'
 
 
 function Card(props) {
     
-    const { projects, requestProjects, modalProjct } = props
+    const { projects, requestProjects, closeModalProjct, modal, editarModal } = props
 
     useEffect(() => {
         requestProjects()
@@ -17,8 +17,23 @@ function Card(props) {
 
 
     function openModal(){
-        modalProjct(true)
+        closeModalProjct(true)
     }
+
+    function updateProject(project){
+        const { _id, description, title } = project
+
+        const dateProject = {
+            _id,
+            description,
+            title
+        }
+
+        editarModal(dateProject)
+
+        
+    }
+
 
     return (
         <div className="container-card-projects" >
@@ -28,7 +43,7 @@ function Card(props) {
             </div>
             {   
                 projects.map(project => (
-                    <div key={project._id} className="card-projects" title={`Criado por ${project.user.name}`}>
+                    <div key={project._id} onClick={() => updateProject(project)} className="card-projects" title={`Criado por ${project.user.name}`}>
                         <h3>{project.title}</h3>
                         <p>{project.description}</p>
                         <span>{formatDate(project.creatdAt)}</span>
@@ -42,10 +57,10 @@ function Card(props) {
 
 const mapStateToProps = state => ({
     projects: state.projects.projects,
-    
+    modal: state
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators( {requestProjects, modalProjct } , dispatch);
+  bindActionCreators( {requestProjects, closeModalProjct, editarModal } , dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card)

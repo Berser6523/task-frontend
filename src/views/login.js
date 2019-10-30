@@ -23,7 +23,7 @@ const validation = Yup.object().shape({
 function Login({ auth, state, history }) {
 
     if(state.authenticate){
-        history.push('/dashboard')
+        history.push('/projects')
     }
 
     return (

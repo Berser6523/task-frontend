@@ -26,6 +26,7 @@ import Sidebar from "components/Sidebar/Sidebar"
 import routes from "../default-routes.js"
 import Routers from '../routers'
 import ModalProject from '../components/modal/ModalProject'
+import ModalTask from '../components/modal/modalTask'
 
 import Image from "assets/img/sidebar-3.jpg"
 
@@ -53,6 +54,8 @@ function Admin(props){
 
 
             <ModalProject openModal={modal}/>
+
+            <ModalTask />
         </>
     )
 }

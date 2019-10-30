@@ -16,7 +16,7 @@ const validation = Yup.object().shape({
     description: Yup.string().required('Descrição é Campo Obrigatório')
 })
 
-function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, editProjeto }){
+function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, editProjeto }){    
 
     let idUpdate = editModal._id ? editModal._id : ""
 

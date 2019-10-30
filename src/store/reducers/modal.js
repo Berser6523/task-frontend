@@ -10,8 +10,11 @@ export default function Projects(state = INTIAL_STATE, action){
             return { ...state, modal_project: action.modal }
 
         case 'EDIT_MODAL_PROJECT':
-            return { modal_project: true, editProject: action.payload }
-            
+            return { ...state, modal_project: true, editProject: action.payload }
+        
+        case 'MODAL_TASK_TOGGLE':
+            return { ...state, modal_tasks: action.modal }
+        
         default:
             return state;
     }

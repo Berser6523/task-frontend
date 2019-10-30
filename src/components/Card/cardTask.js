@@ -3,13 +3,13 @@ import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { openModalTask } from '../../store/actions/tasks'
+import { toggleModalTask  } from '../../store/actions/modal'
 
 
-function CarTask({ openModalTask }) {
+function CarTask({ toggleModalTask }) {
 
     function openModal(){
-        openModalTask(true)
+        toggleModalTask(true)
     }
 
     return (
@@ -37,11 +37,11 @@ function CarTask({ openModalTask }) {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openModalTask }, dispatch);
+  bindActionCreators({ toggleModalTask }, dispatch);
 
 
-const mapStateToProps = state => ({
-  modal: state.modalTask.modal_tasks
+const mapStateToProps = state => (console.log(state),{
+  modal: state.modal.modal_tasks
 });  
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarTask)

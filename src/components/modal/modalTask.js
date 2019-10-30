@@ -3,13 +3,13 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { openModalTask } from '../../store/actions/tasks'
+import { toggleModalTask } from '../../store/actions/modal'
 
-function ModalTask({ modal, openModalTask }){
+function ModalTask({ modal, toggleModalTask }){
 
     function closeModal(e){
         if(e.target.classList.value.includes('active')){
-            openModalTask(false)
+            toggleModalTask(false)
         }
     }
 
@@ -43,10 +43,10 @@ function ModalTask({ modal, openModalTask }){
 
 
 const mapStateToProps = state => ({
-  modal: state.modalTask.modal_tasks
+  modal: state.modal.modal_tasks
 });  
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ openModalTask }, dispatch);
+  bindActionCreators({ toggleModalTask }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalTask)

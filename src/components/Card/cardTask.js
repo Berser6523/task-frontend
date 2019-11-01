@@ -4,9 +4,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { toggleModalTask  } from '../../store/actions/modal'
-
-
-function CarTask({ toggleModalTask }) {
+ 
+function CarTask({ toggleModalTask}) {    
 
     function openModal(){
         toggleModalTask(true)
@@ -40,8 +39,5 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({ toggleModalTask }, dispatch);
 
 
-const mapStateToProps = state => (console.log(state),{
-  modal: state.modal.modal_tasks
-});  
 
-export default connect(mapStateToProps, mapDispatchToProps)(CarTask)
+export default connect(null, mapDispatchToProps)(CarTask)

@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { toggleModalTask  } from '../../store/actions/modal'
+import { requestTask } from '../../store/actions/tasks'
  
-function CarTask({ toggleModalTask}) {    
+function CarTask({ toggleModalTask , requestTask}) {    
 
     function openModal(){
         toggleModalTask(true)
     }
+
+    useEffect(() =>{
+        requestTask()
+    },[requestTask])
 
     return (
         <>
@@ -36,7 +41,7 @@ function CarTask({ toggleModalTask}) {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModalTask }, dispatch);
+  bindActionCreators({ toggleModalTask, requestTask }, dispatch);
 
 
 

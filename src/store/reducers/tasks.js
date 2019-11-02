@@ -1,21 +1,32 @@
 const INTIAL_STATE = {
-    users: [],
+    tasks: [],
     loading: false,
     error: false,
     filtro: '',
 }
 
-export default function Users(state = INTIAL_STATE, action){
+export default function Task(state = INTIAL_STATE, action){
     
     switch(action.type){
-        case 'REQUEST_USERS':
+        case 'REQUEST_TASK':
             return {...state, loading:true} 
             
-        case 'SUCCESS_USERS_LIST':                
-            return { users: action.data, loading: false, error: false }
+        case 'SUCCESS_TASK_LIST':  
 
-        case 'FAILUIRE_USERS_LIST':
-            return { users: [], loading: false, error: true }
+            return {...state, tasks: action.data, loading: false, error: false }
+
+        case 'FAILUIRE_TASK_LIST':
+            return {...state, tasks: [], loading: false, error: true }
+        
+
+        case 'REQUEST_ADD_TASK':
+            return {...state, loading:true} 
+        
+        case 'SUCCESS_REQUEST_ADD':                
+            return {...state, loading: false, error: false }
+
+        case 'FAILURE_REQUEST_ADD':                
+            return {...state, loading: false, error: true }    
 
         default:
             return state

@@ -1,117 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import chroma from 'chroma-js';
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Formik } from 'formik'
 
-import Select from 'react-select'
+
 
 import { toggleModalTask } from '../../store/actions/modal'
+import { requestAddTask } from '../../store/actions/tasks'
 
-import { setValueSelect } from '../../helper'
-import { api } from '../../services/api'
+import FormTask from '../../components/Forms/formTask'
+import * as Yup from 'yup'
 
-const customStylesCliente = {
-    option: (provided, state) => ({
-        ...provided,
-      width: '100%',
-      background: 'transparent',
-      height: 17,
-      color: '#7e7e7e',
-      padding: "0px",
-      fontSize: 14,
-      fontWeight: 500,
-      marginBottom: "15px",
-      cursor: 'pointer',
-      }),
-  
-      input: () =>({
-          width: '100%',
-          borderBottom: '1px solid #b7b7b7',
-          padding: "0px 0px 0px 0px",
-      }),
-  
-      valueContainer:(provided) => ({
-          ...provided,
-          paddingLeft:0,
-          paddingRight: 0,
-          cursor: 'pointer',
-      }),
-  
-      dropdownIndicator:(provided) => ({
-          ...provided,
-      }),
-  
-      singleValue: (provided) => ({
-          ...provided,
-          top: 30,
-          color: "#000000",
-          fontSize: "14px",
-          fontWeight: 500
-      }),
-  
-      indicatorSeparator: (provided) => ({
-          ...provided,
-          backgroundColor: "unset",
-      }),
+const validation = Yup.object().shape({
+    title: Yup.string().required('Campo obrigatorio'),
+    description: Yup.string().required('Descrição é Campo Obrigatório'),
+})
 
-      indicatorsContainer:(provided) => ({
-          ...provided,
-          position: 'absolute',
-          right: '0px',
-          top: "50%",
-          transform: "translateY(-50%)",
-      }),
-  
-      menu:(provided) => ({
-          ...provided,
-          width: "100%",
-          height: "150px",
-          padding: "10px 10px 10px 45px",
-          boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16)",
-          backgroundColor: "#fff",
-      }),
 
-      menuList:(provided) => ({
-          ...provided,
-          maxHeight: "332px",
-          height: "332px",
-      }),
-  
-      placeholder:(provided) => ({
-          ...provided,
-          color: "#000000",
-          fontSize: "14px",
-          fontWeight: 500,
-          top: "30px",
-      }),
-  
-      control: () => ({
-        width: "100%",
-        display: "flex",
-      }),    
-}
-function ModalTask({ modal, toggleModalTask }){
+function ModalTask({ modal, toggleModalTask, requestAddTask }){
 
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        async function loadUser(){
-            const response = await api.get('/users') 
-
-            let config = ['name', 'name']
-
-            let values = setValueSelect(config, response.data)
-
-            setUsers(values)
-            
-        }
-        loadUser()
-    },[])
-
+    const [userId, setUserId] = useState('') 
+    const [projectId, setProjectId] = useState('') 
+    
 
     
-    console.log(users)
 
     function closeModal(e){
         if(e.target.classList.value.includes('active')){
@@ -119,28 +32,34 @@ function ModalTask({ modal, toggleModalTask }){
         }
     }
 
+    let initialState = {
+        title:  "",
+        description: "",
+    }
+
+
     return (
-        <div onClick={closeModal} className={ modal ? "container-modal-project active": "container-modal-project" }>
+        <div onClick={closeModal} className={ modal ? "container-modal-project taks active ": "container-modal-project taks" }>
             <div className="card-modal-project">
                 <h1>Adicionar Tarefa</h1>  
-                <form>
-                    <div className="container-form">
-                        <input type="text" name="title" placeholder="Titulo" />   
-                    </div> 
-                      
-                    <div className="container-form">
-                        <input type="text" name="description" placeholder="Descrição" />   
-                    </div>   
+                <Formik
+                        enableReinitialize
+                        initialValues={initialState}
+                        onSubmit={(value, actions) => {
+                            
+                            if(userId){
+                                requestAddTask({ ...value,  userId, projectId})
+                            }
+                            
+                            // actions.resetForm(initialState)
+                            actions.setSubmitting(false);
+                        }}
 
-                    <div className="container-form">
-                        <Select options={users} styles={customStylesCliente} classNamePrefix="react-select"/>
-                    </div>
+                        render={props => <FormTask { ...props } setUserId={setUserId} setProjectId={setProjectId} />}
+
+                        validationSchema={validation}>   
                     
-                    <div className="btn">
-                        <button type="submit">Adicionar</button>
-                    </div>
-
-                </form>
+                    </Formik>
             </div>
         </div>
     )
@@ -153,6 +72,6 @@ const mapStateToProps = state => ({
 });  
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModalTask }, dispatch);
+  bindActionCreators({ toggleModalTask, requestAddTask }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalTask)

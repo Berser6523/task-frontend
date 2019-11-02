@@ -25,6 +25,12 @@
         }
     }
 
+    &.taks{
+        .card-modal-project{
+            height: 48%;     
+        }
+    }
+
     &.active{
         z-index: 99;
         pointer-events: all;

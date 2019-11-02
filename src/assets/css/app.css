@@ -195,6 +195,9 @@ form .error {
   margin-left: auto;
   margin-right: auto;
 }
+.container-modal-project.taks .card-modal-project {
+  height: 48%;
+}
 .container-modal-project.active {
   z-index: 99;
   pointer-events: all;
@@ -204,6 +207,26 @@ form .error {
 .container-modal-project.active .card-modal-project {
   top: 50%;
   transition: all 0.5s;
+}
+
+.react-select__control {
+  height: 45px;
+}
+.react-select__control .react-select__value-container {
+  height: 100%;
+  padding-left: 20px;
+}
+.react-select__control .react-select__value-container .react-select__placeholder {
+  left: 20px;
+  top: 23px;
+}
+.react-select__control .react-select__value-container .react-select__single-value {
+  top: 25px;
+  left: 20px;
+  color: #676767;
+}
+.react-select__control .react-select__value-container .react-select__single-value .react-select__input {
+  padding-left: 20px;
 }
 
 /*# sourceMappingURL=app.css.map */

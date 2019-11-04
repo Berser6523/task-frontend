@@ -12,7 +12,6 @@ export default function Task(state = INTIAL_STATE, action){
             return {...state, loading:true} 
             
         case 'SUCCESS_TASK_LIST':  
-
             return {...state, tasks: action.data, loading: false, error: false }
 
         case 'FAILUIRE_TASK_LIST':

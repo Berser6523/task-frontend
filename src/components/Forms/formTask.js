@@ -13,30 +13,32 @@ const customStylesCliente = {
     }),
 }
 
-function FormTask({ setUserId, setProjectId }){
+function FormTask({ setUserId, setProjectId, modal }){
 
-    const [name, setName] = useState('select_id')
     const [users, setUsers] = useState([])
     const [projects, setProjects] = useState([])
-    
 
     useEffect(() => {
         async function load(){
-            const responseUser = await api.get('/users') 
-            const responseProjects = await api.get('/list')
+            if(modal){
+                const responseUser = await api.get('/users') 
+                const responseProjects = await api.get('/list')
 
-            let configUser = ['_id', 'name']
-            let configProjects = ['_id', 'title']
+                let configUser = ['_id', 'name']
+                let configProjects = ['_id', 'title']
 
-            let users = setValueSelect(configUser, responseUser.data)
-            let projects = setValueSelect(configProjects, responseProjects.data)
+                let users = setValueSelect(configUser, responseUser.data)
+                let projects = setValueSelect(configProjects, responseProjects.data)
 
-            setUsers(users)
-            setProjects(projects)
+                setUsers(users)
+                setProjects(projects)
+            }else{
+                setUsers([])
+            }
             
         }
         load()
-    },[])
+    },[modal])
 
     function handleInputChangeUser(selectName,selectedOption){
         setUserId(selectName.value)
@@ -61,7 +63,8 @@ function FormTask({ setUserId, setProjectId }){
 
             <div className="container-form">
                 <Select
-                    options={users}
+                    
+                    options={modal ? users : []}
                     onChange={handleInputChangeUser}
                     defaultValue={{ label: 'Usuários', value: 'Usuários' }}
                     styles={customStylesCliente}

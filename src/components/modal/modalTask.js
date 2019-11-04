@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -24,7 +24,6 @@ function ModalTask({ modal, toggleModalTask, requestAddTask }){
     const [projectId, setProjectId] = useState('') 
     
 
-    
 
     function closeModal(e){
         if(e.target.classList.value.includes('active')){
@@ -49,13 +48,20 @@ function ModalTask({ modal, toggleModalTask, requestAddTask }){
                             
                             if(userId){
                                 requestAddTask({ ...value,  userId, projectId})
+                                actions.resetForm(initialState)
+                                actions.setSubmitting(false);
                             }
                             
-                            // actions.resetForm(initialState)
-                            actions.setSubmitting(false);
+                            
                         }}
 
-                        render={props => <FormTask { ...props } setUserId={setUserId} setProjectId={setProjectId} />}
+                        render={props =>
+                            <FormTask
+                                { ...props }
+                                setUserId={setUserId}
+                                setProjectId={setProjectId}
+                                modal={modal}/>
+                            }
 
                         validationSchema={validation}>   
                     

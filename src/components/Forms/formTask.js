@@ -17,37 +17,48 @@ function FormTask({ setUserId, setProjectId, modal }){
 
     const [users, setUsers] = useState([])
     const [projects, setProjects] = useState([])
+    const [userValue, setUserValue] = useState({ label: 'Usuário', value: 'Usuário' })
+    const [userProject, setProjectValue] = useState({ label: 'Projeto', value: 'Projeto' })
+    const editTask = modal.project ? { user_id: modal.project.user, project_id: modal.project._id } : ''
 
     useEffect(() => {
         async function load(){
-            if(modal){
-                const responseUser = await api.get('/users') 
-                const responseProjects = await api.get('/list')
+            const responseUser = await api.get('/users') 
+            const responseProjects = await api.get('/list')
 
-                let configUser = ['_id', 'name']
-                let configProjects = ['_id', 'title']
+            let configUser = ['_id', 'name']
+            let configProjects = ['_id', 'title']
 
-                let users = setValueSelect(configUser, responseUser.data)
-                let projects = setValueSelect(configProjects, responseProjects.data)
+            let users = setValueSelect(configUser, responseUser.data)
+            let projects = setValueSelect(configProjects, responseProjects.data)
 
-                setUsers(users)
-                setProjects(projects)
+            setUsers(users)
+            setProjects(projects)
+            
+
+            if(modal.acao === 'editar'){
+                setUserValue(users.find(user => user.value === editTask.user_id))
+                setProjectValue(projects.find(project => project.value === editTask.project_id))
             }else{
-                setUsers([])
+                
+                setUserValue({ label: 'Usuário', value: 'Usuário' })
+                setProjectValue({ label: 'Projeto', value: 'Projeto' })
             }
+
             
         }
         load()
-    },[modal])
+    },[modal, editTask.user_id, editTask.project_id])
 
     function handleInputChangeUser(selectName,selectedOption){
+        setUserValue(selectName)
         setUserId(selectName.value)
     }
 
     function handleInputChangeProject(selectName,selectedOption){
+        setProjectValue(selectName)
         setProjectId(selectName.value)
     }
-
 
     return (
         <Form>
@@ -63,10 +74,9 @@ function FormTask({ setUserId, setProjectId, modal }){
 
             <div className="container-form">
                 <Select
-                    
-                    options={modal ? users : []}
+                    value={userValue}
+                    options={users}
                     onChange={handleInputChangeUser}
-                    defaultValue={{ label: 'Usuários', value: 'Usuários' }}
                     styles={customStylesCliente}
                     classNamePrefix="react-select"
                     />
@@ -74,9 +84,9 @@ function FormTask({ setUserId, setProjectId, modal }){
             
             <div className="container-form">
                 <Select
+                    value={userProject}
                     options={projects}
                     onChange={handleInputChangeProject}
-                    defaultValue={{ label: 'Tarefas', value: 'Tarefas' }}
                     styles={customStylesCliente}
                     classNamePrefix="react-select"
                     />

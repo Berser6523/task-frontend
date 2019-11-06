@@ -3,19 +3,28 @@ import React, { useEffect } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { toggleModalTask  } from '../../store/actions/modal'
+import { toggleModalTask, editModalTask } from '../../store/actions/modal'
 import { requestTask } from '../../store/actions/tasks'
 import { formatDate } from '../../helper/index'
  
-function CarTask({ toggleModalTask , requestTask, tasks}) {    
+function CarTask(props) {    
+    const { toggleModalTask , requestTask, tasks, editModalTask } = props
+
+    
 
     function openModal(){
-        toggleModalTask(true)
+        toggleModalTask(true,'adicionar')
+        
     }
 
     useEffect(() =>{
         requestTask()
+        
     },[requestTask])
+
+    function editask(task){
+        editModalTask(task, true,'editar')
+    }
 
     return (
         <>
@@ -28,7 +37,7 @@ function CarTask({ toggleModalTask , requestTask, tasks}) {
                 <div className="container-card-projects">
                     {
                         tasks.map(task => (
-                            <div key={task._id} className="card-projects">
+                            <div key={task._id} className="card-projects" onClick={() => editask(task)}>
                                 <div className="delete-card-project">
                                     <i className="pe-7s-close"></i>
                                 </div>
@@ -50,7 +59,7 @@ function CarTask({ toggleModalTask , requestTask, tasks}) {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModalTask, requestTask }, dispatch);
+  bindActionCreators({ toggleModalTask, requestTask, editModalTask }, dispatch);
 
 
 const mapStateToProps = state => ({

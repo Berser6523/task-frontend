@@ -18,41 +18,37 @@ const validation = Yup.object().shape({
 })
 
 
-function ModalTask({ modal, toggleModalTask, requestAddTask }){
+function ModalTask(props){
+    const { modal, toggleModalTask, requestAddTask } = props
 
     const [userId, setUserId] = useState('') 
     const [projectId, setProjectId] = useState('') 
     
+    
 
-
-    function closeModal(e){
+    function toggleModal(e){
         if(e.target.classList.value.includes('active')){
-            toggleModalTask(false)
+            toggleModalTask(false,'')
         }
     }
 
     let initialState = {
-        title:  "",
-        description: "",
+        title:  modal.title ? modal.title : "",
+        description: modal.description ? modal.description : "",
     }
 
 
     return (
-        <div onClick={closeModal} className={ modal ? "container-modal-project taks active ": "container-modal-project taks" }>
+        <div onClick={toggleModal} className={ modal.modal ? "container-modal-project taks active ": "container-modal-project taks" }>
             <div className="card-modal-project">
                 <h1>Adicionar Tarefa</h1>  
                 <Formik
                         enableReinitialize
                         initialValues={initialState}
                         onSubmit={(value, actions) => {
-                            
-                            if(userId){
-                                requestAddTask({ ...value,  userId, projectId})
-                                actions.resetForm(initialState)
-                                actions.setSubmitting(false);
-                            }
-                            
-                            
+                            requestAddTask({ ...value,  userId, projectId})
+                            actions.resetForm(initialState)
+                            actions.setSubmitting(false);
                         }}
 
                         render={props =>
@@ -60,7 +56,8 @@ function ModalTask({ modal, toggleModalTask, requestAddTask }){
                                 { ...props }
                                 setUserId={setUserId}
                                 setProjectId={setProjectId}
-                                modal={modal}/>
+                                modal={modal}
+                                />
                             }
 
                         validationSchema={validation}>   
@@ -74,7 +71,7 @@ function ModalTask({ modal, toggleModalTask, requestAddTask }){
 
 
 const mapStateToProps = state => ({
-  modal: state.modal.modal_tasks
+  modal: state.modal.modal_tasks,
 });  
 
 const mapDispatchToProps = dispatch =>

@@ -36,7 +36,7 @@ export function* addTask({payload}){
     try{
         const response = yield call(requestAddTask, payload)
         yield put({ type: 'SUCCESS_TASK_LIST', data: response})
-        yield put({ type: 'MODAL_TASK_TOGGLE', modal_tasks: false})
+        yield put({ type: 'MODAL_TASK_TOGGLE', payload: { modal: false, acao: ''} })
     }catch(err){
         console.log(err)
         yield put({ type: 'FAILUIRE_TASK_LIST'})

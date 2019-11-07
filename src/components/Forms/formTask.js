@@ -13,7 +13,7 @@ const customStylesCliente = {
     }),
 }
 
-function FormTask({ setUserId, setProjectId, modal }){
+function FormTask({ setUserId, setProjectId, setTaskId, modal }){
 
     const [users, setUsers] = useState([])
     const [projects, setProjects] = useState([])
@@ -37,8 +37,15 @@ function FormTask({ setUserId, setProjectId, modal }){
             
 
             if(modal.acao === 'editar'){
-                setUserValue(users.find(user => user.value === editTask.user_id))
-                setProjectValue(projects.find(project => project.value === editTask.project_id))
+                let userEdit = users.find(user => user.value === editTask.user_id)
+                let projectEdit = projects.find(project => project.value === editTask.project_id)
+
+                setUserValue(userEdit)
+                setProjectValue(projectEdit)
+
+                setUserId(userEdit.value)
+                setProjectId(projectEdit.value)
+                setTaskId(modal._id)
             }else{
                 
                 setUserValue({ label: 'Usuário', value: 'Usuário' })

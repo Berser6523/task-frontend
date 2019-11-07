@@ -42,3 +42,26 @@ export function* addTask({payload}){
         yield put({ type: 'FAILUIRE_TASK_LIST'})
     }
 }
+
+
+async function requestEditTask({ task }){
+    const { _id, ...rest } = task
+
+    const response = await api.put(`/task/${_id}`,{
+                ...rest
+            })    
+
+    return response.data.task
+}
+
+export function* editTask({payload}){
+    
+    try{
+        const response = yield call(requestEditTask, payload)
+        yield put({ type: 'SUCCESS_TASK_LIST', data: response})
+        yield put({ type: 'MODAL_TASK_TOGGLE', payload: { modal: false, acao: ''} })
+    }catch(err){
+        console.log(err)
+        yield put({ type: 'FAILUIRE_TASK_LIST'})
+    }
+}

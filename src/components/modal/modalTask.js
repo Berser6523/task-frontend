@@ -7,7 +7,7 @@ import { Formik } from 'formik'
 
 
 import { toggleModalTask } from '../../store/actions/modal'
-import { requestAddTask } from '../../store/actions/tasks'
+import { requestAddTask, requestEdiTask } from '../../store/actions/tasks'
 
 import FormTask from '../../components/Forms/formTask'
 import * as Yup from 'yup'
@@ -19,11 +19,11 @@ const validation = Yup.object().shape({
 
 
 function ModalTask(props){
-    const { modal, toggleModalTask, requestAddTask } = props
+    const { modal, toggleModalTask, requestAddTask, requestEdiTask } = props
 
     const [userId, setUserId] = useState('') 
     const [projectId, setProjectId] = useState('') 
-    
+    const [taskId, setTaskId] = useState('') 
     
 
     function toggleModal(e){
@@ -46,9 +46,16 @@ function ModalTask(props){
                         enableReinitialize
                         initialValues={initialState}
                         onSubmit={(value, actions) => {
-                            requestAddTask({ ...value,  userId, projectId})
+
+                            if(modal._id){
+                                requestEdiTask({ ...value,  assignedTo: userId, project: projectId, _id: taskId})
+                            }else{
+                                requestAddTask({ ...value,  userId, projectId})
+                            }
+
                             actions.resetForm(initialState)
                             actions.setSubmitting(false);
+                            
                         }}
 
                         render={props =>
@@ -56,6 +63,7 @@ function ModalTask(props){
                                 { ...props }
                                 setUserId={setUserId}
                                 setProjectId={setProjectId}
+                                setTaskId={setTaskId}
                                 modal={modal}
                                 />
                             }
@@ -75,6 +83,6 @@ const mapStateToProps = state => ({
 });  
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModalTask, requestAddTask }, dispatch);
+  bindActionCreators({ toggleModalTask, requestAddTask, requestEdiTask }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalTask)

@@ -25,7 +25,11 @@ export default function Task(state = INTIAL_STATE, action){
             return {...state, loading: false, error: false }
 
         case 'FAILURE_REQUEST_ADD':                
-            return {...state, loading: false, error: true }    
+            return {...state, loading: false, error: true } 
+            
+            
+        case 'REQUEST_EDIT_TASK':
+            return {...state, loading:true } 
 
         default:
             return state

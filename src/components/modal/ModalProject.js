@@ -9,34 +9,36 @@ import { connect } from 'react-redux'
 
 
 import { addProjeto, editProjeto } from '../../store/actions/projects'
-import { closeModalProjct  } from '../../store/actions/modal'
+import { toggleModalProjct  } from '../../store/actions/modal'
 
 const validation = Yup.object().shape({
     title: Yup.string().required('Campo obrigatorio'),
     description: Yup.string().required('Descrição é Campo Obrigatório')
 })
 
-function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, editProjeto }){    
+function ModalProject(props){    
 
-    let idUpdate = editModal._id ? editModal._id : ""
+    const { addProjeto, toggleModalProjct, modal, editProjeto } = props
+
+    let idUpdate = modal._id ? modal._id : ""
 
 
     let initialState = {
-        title: editModal.title ? editModal.title : "",
-        description: editModal.description ? editModal.description : "",
+        title: modal.title ? modal.title : "",
+        description: modal.description ? modal.description : "",
     }
 
 
-    function closeModal(e){
+    function toggleModal(e){
         if(e.target.classList.value.includes('active')){
-            closeModalProjct(false)
+            toggleModalProjct(false, '')
         }
     }
 
     return (
-        <div onClick={closeModal} className={ openModal ? "container-modal-project active": "container-modal-project" }>
+        <div onClick={toggleModal} className={ modal.modal ? "container-modal-project active": "container-modal-project" }>
             <div className="card-modal-project">
-                <h1>{idUpdate ? "Editar Projeto": "Adicionar Projeto"} </h1>  
+                <h1>{modal.acao === 'editar'? "Editar Projeto": "Adicionar Projeto"} </h1>  
                 <Formik
                         enableReinitialize
                         initialValues={initialState}
@@ -64,10 +66,10 @@ function ModalProject({ addProjeto, openModal, closeModalProjct, editModal, edit
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addProjeto, closeModalProjct, editProjeto }, dispatch);
+  bindActionCreators({ addProjeto, toggleModalProjct, editProjeto }, dispatch);
 
 const mapStateToProps = state => ({
-  editModal: state.modal.editProject
+  modal: state.modal.modal_project
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalProject)

@@ -33,7 +33,7 @@ export function* addProject({payload}){
     try{
         const response = yield call(requestAddProject, payload)
         yield put({ type: 'ADD_PROJECTS', data: response.project})
-        yield put({ type: 'CLOSE_MODAL_PROJECT', modal: false})
+        yield put({ type: 'MODAL_PROJECT_TOGGLE', payload: { modal: false, acao: ''} })
     }catch(err){
         console.log(err)
         yield put({ type: 'FAILUIRE_PROJECTS_LIST', error: true})
@@ -55,7 +55,7 @@ export function* editProject({payload}){
     try{
         const response = yield call(requestEditProject, payload)
         yield put({ type: 'EDIT_PROJECT', data: response.project})
-        yield put({ type: 'CLOSE_MODAL_PROJECT', modal: false})
+        yield put({ type: 'MODAL_PROJECT_TOGGLE', payload: { modal: false, acao: ''} })
     }catch(err){
         console.log(err)
         yield put({ type: 'FAILUIRE_PROJECTS_LIST', error: true})

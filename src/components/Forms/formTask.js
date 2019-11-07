@@ -100,7 +100,7 @@ function FormTask({ setUserId, setProjectId, setTaskId, modal }){
             </div>
             
             <div className="btn">
-                <button type="submit">Adicionar</button>
+                <button type="submit">{modal.acao === 'editar' ? "Editar" : "Adicionar"}</button>
             </div>
 
         </Form>

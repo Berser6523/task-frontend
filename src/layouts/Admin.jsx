@@ -35,7 +35,7 @@ function Admin(props){
     const [color]  = useState("black")
     const [hasImage]  = useState(true)
     
-    const { token, modal } = props
+    const { token } = props
 
     authenticate(token)
     
@@ -53,7 +53,7 @@ function Admin(props){
             </div>
 
 
-            <ModalProject openModal={modal}/>
+            <ModalProject />
 
             <ModalTask />
         </>
@@ -62,7 +62,6 @@ function Admin(props){
 
 const mapStateToProps = state => ({
     token: state.auth.token,
-    modal: state.modal.modal_project
 })
 
 export default connect(mapStateToProps, null)(Admin)

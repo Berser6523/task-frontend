@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux'
 import { formatDate } from '../../helper'
 
 import { requestProjects, deleteProject } from '../../store/actions/projects'
-import { closeModalProjct, editarModal } from '../../store/actions/modal'
+import { toggleModalProjct, editarModal } from '../../store/actions/modal'
 
 
 function Card(props) {
     
-    const { projects, requestProjects, closeModalProjct, editarModal, deleteProject } = props
+    const { projects, requestProjects, toggleModalProjct, editarModal, deleteProject } = props
 
 
     useEffect(() => {
@@ -17,8 +17,8 @@ function Card(props) {
     },[requestProjects])
 
 
-    function openModal(){
-        closeModalProjct(true)
+    function toggleModal(){
+        toggleModalProjct(true, 'adicionar')
     }
 
     function updateProject(e, project){
@@ -31,7 +31,7 @@ function Card(props) {
                 title
             }
 
-            editarModal(dateProject)
+            editarModal(dateProject, true, 'editar')
         }        
     }
 
@@ -46,7 +46,7 @@ function Card(props) {
         <>
         <div className="title-create">
             <h2>Projetos</h2>
-            <button onClick={openModal} className="btn-block btn btn-default">Adicionar</button>
+            <button onClick={toggleModal} className="btn-block btn btn-default">Adicionar</button>
         </div>
         <div className="container-card-projects" >
             {   
@@ -73,6 +73,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators( {requestProjects, closeModalProjct, editarModal, deleteProject } , dispatch);
+  bindActionCreators( {requestProjects, toggleModalProjct, editarModal, deleteProject } , dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card)

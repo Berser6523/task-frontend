@@ -41,7 +41,7 @@ function ModalTask(props){
     return (
         <div onClick={toggleModal} className={ modal.modal ? "container-modal-project taks active ": "container-modal-project taks" }>
             <div className="card-modal-project">
-                <h1>Adicionar Tarefa</h1>  
+                <h1>{modal.acao === 'editar' ? "Editar Tarefa" : "Adicionar Tarefa"}</h1>  
                 <Formik
                         enableReinitialize
                         initialValues={initialState}
@@ -49,6 +49,7 @@ function ModalTask(props){
 
                             if(modal._id){
                                 requestEdiTask({ ...value,  assignedTo: userId, project: projectId, _id: taskId})
+                                initialState = {...value}
                             }else{
                                 requestAddTask({ ...value,  userId, projectId})
                             }

@@ -10,17 +10,15 @@ import { formatDate } from '../../helper/index'
 function CarTask(props) {    
     const { toggleModalTask , requestTask, tasks, editModalTask } = props
 
-    
+    useEffect(() =>{
+        requestTask()
+        
+    },[requestTask])
 
     function openModal(){
         toggleModalTask(true,'adicionar')
         
     }
-
-    useEffect(() =>{
-        requestTask()
-        
-    },[requestTask])
 
     function editask(task){
         editModalTask(task, true,'editar')

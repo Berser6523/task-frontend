@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -11,11 +11,16 @@ import { formatDate } from '../../helper/index'
 function CarTask(props) {    
     const { toggleModalTask , requestTask, tasks, editModalTask, token } = props
 
-    useEffect(() => {
-        const socket = socketio('http://localhost:3333',{
+    const socket = useMemo(() =>socketio('http://localhost:3333',{
             query: {
                 token
             }
+        }), [token])
+
+        
+    useEffect(() => {
+        socket.on('teste', data => {
+            console.log(data)
         })
     },[])
 

@@ -11,6 +11,8 @@ function Card(props) {
     
     const { projects, requestProjects, toggleModalProjct, editarModal, deleteProject } = props
 
+    
+
 
     useEffect(() => {
         requestProjects()

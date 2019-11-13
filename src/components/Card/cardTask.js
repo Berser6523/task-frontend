@@ -3,16 +3,24 @@ import React, { useEffect } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import socketio from 'socket.io-client'
 import { toggleModalTask, editModalTask } from '../../store/actions/modal'
 import { requestTask } from '../../store/actions/tasks'
 import { formatDate } from '../../helper/index'
  
 function CarTask(props) {    
-    const { toggleModalTask , requestTask, tasks, editModalTask } = props
+    const { toggleModalTask , requestTask, tasks, editModalTask, token } = props
+
+    useEffect(() => {
+        const socket = socketio('http://localhost:3333',{
+            query: {
+                token
+            }
+        })
+    },[])
 
     useEffect(() =>{
         requestTask()
-        
     },[requestTask])
 
     function openModal(){
@@ -61,7 +69,8 @@ const mapDispatchToProps = dispatch =>
 
 
 const mapStateToProps = state => ({
-    tasks: state.tasks.tasks
+    tasks: state.tasks.tasks,
+    token: state.auth.token
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarTask)

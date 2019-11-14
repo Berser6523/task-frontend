@@ -5,11 +5,11 @@ import { connect } from 'react-redux'
 
 import socketio from 'socket.io-client'
 import { toggleModalTask, editModalTask } from '../../store/actions/modal'
-import { requestTask } from '../../store/actions/tasks'
+import { requestTask, addTaskSocketIo } from '../../store/actions/tasks'
 import { formatDate } from '../../helper/index'
  
 function CarTask(props) {    
-    const { toggleModalTask , requestTask, tasks, editModalTask, token } = props
+    const { toggleModalTask , requestTask, tasks, editModalTask, token, addTaskSocketIo } = props
 
     const socket = useMemo(() =>socketio('http://localhost:3333',{
             query: {
@@ -19,8 +19,8 @@ function CarTask(props) {
 
         
     useEffect(() => {
-        socket.on('teste', data => {
-            console.log(data)
+        socket.on('tasks', data => {
+            addTaskSocketIo(data)
         })
     },[])
 
@@ -70,7 +70,7 @@ function CarTask(props) {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toggleModalTask, requestTask, editModalTask }, dispatch);
+  bindActionCreators({ toggleModalTask, requestTask, editModalTask, addTaskSocketIo }, dispatch);
 
 
 const mapStateToProps = state => ({

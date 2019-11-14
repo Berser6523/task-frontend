@@ -18,6 +18,9 @@ export default function Task(state = INTIAL_STATE, action){
             return {...state, tasks: [], loading: false, error: true }
         
 
+        case 'ADD_TASK_SOCKET_IO':
+            return { ...state, tasks: action.payload.task, loading: false, error: false  }
+
         case 'REQUEST_ADD_TASK':
             return {...state, loading:true} 
         

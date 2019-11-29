@@ -55,7 +55,7 @@ function FormTask({ setUserId, setProjectId, setTaskId, modal }){
             
         }
         load()
-    },[modal, editTask.user_id, editTask.project_id])
+    },[modal, editTask.user_id, editTask.project_id, setProjectId, setTaskId, setUserId])
 
     function handleInputChangeUser(selectName,selectedOption){
         setUserValue(selectName)

@@ -1,6 +1,6 @@
 import { setToken } from '../services/api'
 
-export function authenticate (token){
+export function authenticate (token, cb){
     setToken(token)
 }
 

@@ -22,7 +22,7 @@ function CarTask(props) {
         socket.on('tasks', data => {
             addTaskSocketIo(data)
         })
-    },[])
+    },[socket, addTaskSocketIo])
 
     useEffect(() =>{
         requestTask()
@@ -49,9 +49,6 @@ function CarTask(props) {
                     {
                         tasks.map(task => (
                             <div key={task._id} className="card-projects" onClick={() => editask(task)}>
-                                <div className="delete-card-project">
-                                    <i className="pe-7s-close"></i>
-                                </div>
                                 <h3>Projeto</h3>
                                 <span>{task.project.title}</span>
 

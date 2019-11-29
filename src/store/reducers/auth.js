@@ -16,6 +16,10 @@ export default function People(state = INTIAL_STATE, action){
         case 'FALIURE_AUTH':
             return { token: [], loading: false, error: true }
 
+        case 'TOKEN_EXPIRED':
+            console.log(action)
+            return { token: action.token = '', authenticate: true }
+
         default:
             return state
     }

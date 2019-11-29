@@ -1,3 +1,5 @@
+import { purgeStoredState } from 'redux-persist'
+
 const INTIAL_STATE = {
     loading: false,
     error: false,
@@ -16,9 +18,10 @@ export default function People(state = INTIAL_STATE, action){
         case 'FALIURE_AUTH':
             return { token: [], loading: false, error: true }
 
-        case 'TOKEN_EXPIRED':
-            console.log(action)
-            return { token: action.token = '', authenticate: true }
+        case 'TOKEN_CLEAR':
+            
+            purgeStoredState().purge()
+            return state;
 
         default:
             return state

@@ -37,11 +37,7 @@ function Admin(props){
     
     const { token } = props
 
-    function cb(a){
-        console.log(a)
-    }
-
-    authenticate(token, cb)
+    authenticate(token)
     
     return (
         <>

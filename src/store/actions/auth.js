@@ -9,9 +9,3 @@ export function auth({email, password}){
         password,
     }
 }
-
-export function expired(){
-    return {
-        type: TOKEN_EXPIRED
-    }
-}

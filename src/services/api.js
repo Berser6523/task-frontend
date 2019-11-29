@@ -1,5 +1,6 @@
 import axios from "axios";
-import { expired } from '../store/actions/auth'
+import { persistor } from '../store'
+
 
 export const api = axios.create({
     baseURL: "http://localhost:3333"
@@ -7,9 +8,11 @@ export const api = axios.create({
 
 const errorHandler = (error) => {
     
-    // if(error.response.status === 401){
-    //     
-    // }
+    if(error.response.status === 401){
+         persistor.purge()  
+         console.log('aqui')
+         window.location.reload()
+    }
 
     
     return Promise.reject({ ...error })
@@ -20,9 +23,9 @@ const successHandler = (response) => {
     return response
 }
 
-api.interceptors.response.use(
-    response => successHandler(response),
-    error => errorHandler(error)
+api.interceptors.response.use( 
+    response =>  successHandler(response),
+    error =>  errorHandler(error)
 )
 
 export const setToken = (token) => {
